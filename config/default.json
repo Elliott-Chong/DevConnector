@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://elliott:elle1412@devconnector.lybrn.mongodb.net/DevConnector?retryWrites=true&w=majority",
+  "jwtToken": "ellebellejson"
+}
