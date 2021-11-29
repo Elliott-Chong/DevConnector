@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useGlobalContext } from "../../context/context";
 
 const EditProfile = () => {
   const history = useHistory();
   const {
     createOrUpdateProfile,
-    state: { profile, loading },
+    state: { profile },
     getCurrentProfile,
   } = useGlobalContext();
   const initialState = {
@@ -40,11 +40,11 @@ const EditProfile = () => {
       skills: !profile ? "" : profile.skills.join(","),
       githubusername: !profile ? "" : profile.githubusername,
       bio: !profile ? "" : profile.bio,
-      twitter: !profile ? "" : profile.twitter,
-      facebook: !profile ? "" : profile.facebook,
-      instagram: !profile ? "" : profile.instagram,
-      youtube: !profile ? "" : profile.youtube,
-      linkedin: !profile ? "" : profile.linedin,
+      twitter: !profile.social ? "" : profile.social.twitter,
+      facebook: !profile.social ? "" : profile.social.facebook,
+      instagram: !profile.social ? "" : profile.social.instagram,
+      youtube: !profile.social ? "" : profile.social.youtube,
+      linkedin: !profile.social ? "" : profile.social.linkedin,
     });
   }, [profile]);
 
@@ -73,11 +73,8 @@ const EditProfile = () => {
   };
   return (
     <>
-      <h1 className="large text-primary">Create Your Profile</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Let's get some information to make your
-        profile stand out
-      </p>
+      <h1 className="large text-primary">Update Your Profile</h1>
+
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
@@ -239,9 +236,9 @@ const EditProfile = () => {
           </>
         )}
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </>
   );

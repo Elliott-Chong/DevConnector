@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useGlobalContext } from "../../context/context";
 import Spinner from "../layout/Spinner";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import DashboardActions from "./DashboardActions";
 
 const Dashboard = () => {
+  useEffect(() => {
+    console.log("rendering dashboard");
+  }, []);
   const { state, getCurrentProfile } = useGlobalContext();
   const { profile, loading, user } = state;
   useEffect(() => getCurrentProfile(), [getCurrentProfile]);
@@ -36,4 +39,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);

@@ -9,12 +9,14 @@ import Alert from "./components/layout/Alert";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import { Switch, Route } from "react-router-dom";
 import { useGlobalContext } from "./context/context";
-import Spinner from "./components/layout/Spinner";
+// import Spinner from "./components/layout/Spinner";
 import EditProfile from "./components/layout/EditProfile";
 import CreateProfile from "./components/layout/CreateProfile";
+import CreateExperience from "./components/layout/CreateExperience";
+import CreateEducation from "./components/layout/CreateEducation";
 function App() {
   const { state, loadUser } = useGlobalContext();
-  const { loading } = state;
+  // const { loading } = state;
   React.useEffect(() => loadUser(), [loadUser]);
 
   return (
@@ -33,6 +35,16 @@ function App() {
             component={CreateProfile}
           />
           <PrivateRoute path="/edit-profile" exact component={EditProfile} />
+          <PrivateRoute
+            path="/add-experience"
+            exact
+            component={CreateExperience}
+          />
+          <PrivateRoute
+            path="/add-education"
+            exact
+            component={CreateEducation}
+          />
         </Switch>
       </section>
     </>

@@ -78,7 +78,54 @@ const AppProvider = ({ children }) => {
     },
     []
   );
-
+  const addExperience = useCallback(async (experienceData, history) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const response = await axios.put(
+        "/api/profile/experience",
+        experienceData,
+        config
+      );
+      dispatch({
+        type: "SET_PROFILE",
+        payload: { profile: response.data.profile },
+      });
+      setAlert("success", "Experience Added!");
+      history.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  }, []);
+  const addEducation = useCallback(async (experienceData, history) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const response = await axios.put(
+        "/api/profile/education",
+        experienceData,
+        config
+      );
+      dispatch({
+        type: "SET_PROFILE",
+        payload: { profile: response.data.profile },
+      });
+      setAlert("success", "Education Added!");
+      history.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  }, []);
   const getCurrentProfile = useCallback(async () => {
     try {
       dispatch({ type: "START_LOADING" });
@@ -105,6 +152,7 @@ const AppProvider = ({ children }) => {
       const response = await axios.post("/api/users", body, config);
       dispatch({ type: "REGISTER_SUCCESS", payload: response.data });
       // {token: pq8uq98wr23rr}
+      loadUser();
     } catch (error) {
       const errors = error.response.data.errors;
       if (errors) {
@@ -126,6 +174,8 @@ const AppProvider = ({ children }) => {
         loginUser,
         getCurrentProfile,
         createOrUpdateProfile,
+        addEducation,
+        addExperience,
       }}
     >
       {children}
