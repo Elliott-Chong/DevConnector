@@ -32,10 +32,11 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   body("email", "Please provide a valid email").isEmail(),
-  body("password", "Password is required").exists(),
+  body("password", "Password is required").not().isEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log("got errors");
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -44,14 +45,14 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         return res
-          .status(200)
+          .status(400)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res
-          .status(200)
+          .status(400)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 

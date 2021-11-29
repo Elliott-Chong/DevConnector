@@ -77,6 +77,7 @@ router.post(
         { $set: profileFields },
         { new: true }
       );
+      console.log(yes);
       return res.json({ profile: yes });
     }
   }

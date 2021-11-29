@@ -1,6 +1,10 @@
 import React from "react";
 import { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useGlobalContext } from "../../context/context";
 const Login = () => {
+  const { loginUser, state } = useGlobalContext();
+  const { isAuthenticated } = state;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,7 +18,12 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    loginUser(email, password);
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard"></Redirect>;
+  }
 
   return (
     <>
@@ -31,7 +40,6 @@ const Login = () => {
             placeholder="Email Address"
             name="email"
             onChange={onChange}
-            required
           />
         </div>
         <div className="form-group">

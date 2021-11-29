@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useGlobalContext } from "../../context/context";
+import { Redirect } from "react-router";
 // import axios from "axios";
 
 const Register = () => {
-  const { setAlert } = useGlobalContext();
+  const { setAlert, attemptRegister, state } = useGlobalContext();
+  const { isAuthenticated } = state;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,7 +14,7 @@ const Register = () => {
     password2: "",
   });
 
-  //   const { name, email, password } = formData;
+  const { name, email, password } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,27 +22,19 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    // if (!password) {
+    //   console.log("hello?");
+    //   setAlert("danger", "Please enter a password");
     if (formData.password !== formData.password2) {
       setAlert("danger", "Passwords do not match");
     } else {
-      //   try {
-      //     const newUser = {
-      //       name,
-      //       email,
-      //       password,
-      //     };
-      //     const config = {
-      //       headers: { "Content-Type": "application/json" },
-      //     };
-      //     const body = JSON.stringify(newUser);
-      //     const res = await axios.post("/api/users", body, config);
-      //     console.log(res.data);
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      console.log("suucess");
+      attemptRegister(name, email, password);
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard"></Redirect>;
+  }
 
   return (
     <>
@@ -54,7 +48,7 @@ const Register = () => {
             type="text"
             placeholder="Name"
             name="name"
-            required
+            // required
             value={formData.name}
             onChange={onChange}
           />
@@ -77,7 +71,7 @@ const Register = () => {
             type="password"
             placeholder="Password"
             name="password"
-            minLength="6"
+            // minLength="6"
             value={formData.password}
             onChange={onChange}
           />
@@ -87,7 +81,7 @@ const Register = () => {
             type="password"
             placeholder="Confirm Password"
             name="password2"
-            minLength="6"
+            // minLength="6"
             value={formData.password2}
             onChange={onChange}
           />

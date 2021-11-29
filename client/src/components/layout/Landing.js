@@ -1,7 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { useGlobalContext } from "../../context/context";
 
 const Landing = () => {
+  const { state } = useGlobalContext();
+  const { isAuthenticated } = state;
+  if (isAuthenticated) {
+    return <Redirect to="dashboard" />;
+  }
   return (
     <section className="landing">
       <div className="dark-overlay">
