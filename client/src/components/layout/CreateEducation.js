@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/context";
-import { useHistory } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 
 const CreateEducation = () => {
   const { addEducation } = useGlobalContext();
@@ -114,9 +114,9 @@ const CreateEducation = () => {
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </>
   );
