@@ -151,6 +151,7 @@ img {
 .alert {
   padding: 0.8rem;
   margin: 1rem 0;
+  transition: height 1s ease;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;

@@ -78,6 +78,13 @@ const AppProvider = ({ children }) => {
     },
     []
   );
+
+  const get_all_profiles = useCallback(async () => {
+    dispatch({ type: "START_LOADING" });
+    const response = await axios.get("/api/profile");
+    dispatch({ type: "FILL_ALL_PROFILES", payload: response.data });
+  }, []);
+
   const addExperience = useCallback(async (experienceData, history) => {
     try {
       const config = {
@@ -142,6 +149,35 @@ const AppProvider = ({ children }) => {
     }
   }, []);
 
+  const delete_experience = async (id) => {
+    const url = `/api/profile/experience/${id}`;
+    try {
+      const response = await axios.delete(url);
+      setAlert("success", response.data);
+      getCurrentProfile();
+    } catch (error) {
+      const errors = error.response.data.errros;
+
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  };
+
+  const delete_education = async (id) => {
+    const url = `/api/profile/education/${id}`;
+    try {
+      const response = await axios.delete(url);
+      setAlert("success", response.data);
+      getCurrentProfile();
+    } catch (error) {
+      const errors = error.response.data.erros;
+
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  };
   const attemptRegister = async (name, email, password) => {
     dispatch({ type: "START_LOADING" });
     const config = {
@@ -163,6 +199,19 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const delete_account = async () => {
+    if (!window.confirm("Are you sure? This action CANNOT be undone!")) return;
+    try {
+      await axios.delete("/api/profile");
+      setAlert("", "Account Deleted");
+      dispatch({ type: "LOGOUT" });
+    } catch (error) {
+      if (error.response) {
+        setAlert("danger", "Server Error");
+      }
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -176,6 +225,10 @@ const AppProvider = ({ children }) => {
         createOrUpdateProfile,
         addEducation,
         addExperience,
+        delete_account,
+        delete_experience,
+        delete_education,
+        get_all_profiles,
       }}
     >
       {children}

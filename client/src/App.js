@@ -11,6 +11,7 @@ import { Switch, Route } from "react-router-dom";
 import { useGlobalContext } from "./context/context";
 // import Spinner from "./components/layout/Spinner";
 import EditProfile from "./components/layout/EditProfile";
+import AllProfiles from "./components/profiles/AllProfiles";
 import CreateProfile from "./components/layout/CreateProfile";
 import CreateExperience from "./components/layout/CreateExperience";
 import CreateEducation from "./components/layout/CreateEducation";
@@ -28,6 +29,7 @@ function App() {
         <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
+          <Route path="/profile" exact component={AllProfiles} />
           <PrivateRoute path="/dashboard" exact component={Dashboard} />
           <PrivateRoute
             path="/create-profile"

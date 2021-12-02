@@ -6,6 +6,7 @@ const Profile = require("../../models/Profile");
 const { body, validationResult } = require("express-validator");
 const config = require("config");
 const axios = require("axios");
+const Users = require("../../models/Users");
 // @route  GET api/profile/me
 // @desc   Test route
 // @access Public
@@ -92,6 +93,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    await user.remove();
+    res.send("Account Deleted");
+  } catch (error) {
+    res.status(500).send("Server Error");
+  }
+});
+
 router.get("/user/:user_id", async (req, res) => {
   try {
     const profiles = await Profile.findOne({
@@ -160,7 +171,7 @@ router.delete("/experience/:exp_id", auth, async (req, res) => {
     console.log(newExp);
     profile.experience = newExp;
     await profile.save();
-    return res.send("Experience deleted");
+    return res.send("Experience deleted!");
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

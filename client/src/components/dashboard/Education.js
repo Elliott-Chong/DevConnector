@@ -2,11 +2,11 @@ import React from "react";
 import Moment from "react-moment";
 import { useGlobalContext } from "../../context/context";
 
-const Experience = ({ experiences }) => {
-  const { delete_experience } = useGlobalContext();
+const Education = ({ educations }) => {
+  const { delete_education } = useGlobalContext();
   return (
     <>
-      <h2 className="my-2">Experience Credentials</h2>
+      <h2 className="my-2">Education Credentials</h2>
       <table className="table">
         <thead>
           <tr>
@@ -16,17 +16,17 @@ const Experience = ({ experiences }) => {
           </tr>
         </thead>
         <tbody>
-          {experiences.map((experience) => {
+          {educations.map((education) => {
             return (
-              <tr key={experience._id}>
-                <td>{experience.company}</td>
-                <td className="hide-sm">{experience.title}</td>
+              <tr key={education._id}>
+                <td>{education.school}</td>
+                <td className="hide-sm">{education.degree}</td>
                 <td>
-                  <Moment format="YYYY/DD/MM">{experience.from}</Moment> -{" "}
-                  {experience.to === null ? (
+                  <Moment format="YYYY/DD/MM">{education.from}</Moment> -{" "}
+                  {education.to === null ? (
                     "Now"
                   ) : (
-                    <Moment format="YYYY/DD/MM">{experience.to}</Moment>
+                    <Moment format="YYYY/DD/MM">{education.to}</Moment>
                   )}
                 </td>
                 <td>
@@ -34,7 +34,7 @@ const Experience = ({ experiences }) => {
                     className="btn btn-danger"
                     onClick={(e) => {
                       e.preventDefault();
-                      delete_experience(experience._id);
+                      delete_education(education._id);
                     }}
                   >
                     Delete
@@ -49,4 +49,4 @@ const Experience = ({ experiences }) => {
   );
 };
 
-export default Experience;
+export default Education;

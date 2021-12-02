@@ -5,7 +5,7 @@ export const initialState = {
   user: null,
   isAuthenticated: null,
   profile: null,
-  all_profiles: {},
+  all_profiles: null,
   error: {},
   repos: [],
 };
@@ -25,6 +25,10 @@ export const reducer = (state, action) => {
     case "REMOVE_ALERT":
       let newAlertss = state.alerts.filter((alert) => alert.id !== payload.id);
       return { ...state, alerts: newAlertss };
+
+    case "FILL_ALL_PROFILES":
+      console.log(payload);
+      return { ...state, all_profiles: payload, loading: false };
 
     case "REGISTER_SUCCESS":
     case "LOGIN_SUCCESS":
