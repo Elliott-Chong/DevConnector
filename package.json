@@ -15,6 +15,7 @@
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "gravatar": "^1.8.2",
@@ -29,5 +30,8 @@
   "devDependencies": {
     "concurrently": "^6.4.0",
     "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "node": "16.13.0"
   }
 }
