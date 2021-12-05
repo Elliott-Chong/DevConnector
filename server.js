@@ -8,7 +8,7 @@ app.use(express.json({ extended: false }));
 app.use(function (req, res, next) {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://warm-earth-24126.herokuapp.com"
+    "https://devconnector-elliott.netlify.app"
   ); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
