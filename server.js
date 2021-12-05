@@ -12,7 +12,7 @@ app.use(function (req, res, next) {
   ); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-auth-token"
+    "Origin, X-Requested-With, Content-Type, Accept, x-auth-token, Application-Type, application-type"
   );
   res.header("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE");
   next();
