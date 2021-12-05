@@ -31,10 +31,13 @@ const Navbar = () => {
         {isAuthenticated && !loading && (
           <>
             <li>
-              <Link to="dashboard">
+              <Link to="/dashboard">
                 <i className="fas fa-user"></i>
                 <span className="hide-sm">Dashboard</span>
               </Link>
+            </li>
+            <li>
+              <Link to="/posts">Posts</Link>
             </li>
             <li>
               <Link to="/" onClick={() => dispatch({ type: "LOGOUT" })}>

@@ -15,6 +15,9 @@ import AllProfiles from "./components/profiles/AllProfiles";
 import CreateProfile from "./components/layout/CreateProfile";
 import CreateExperience from "./components/layout/CreateExperience";
 import CreateEducation from "./components/layout/CreateEducation";
+import SingleProfile from "./components/profile/SingleProfile";
+import Posts from "./components/posts/Posts";
+import SinglePost from "./components/posts/SinglePost";
 function App() {
   const { state, loadUser } = useGlobalContext();
   // const { loading } = state;
@@ -30,7 +33,10 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/profile" exact component={AllProfiles} />
+          <Route path="/profile/:id" exact component={SingleProfile} />
           <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          <PrivateRoute path="/post/:id" exact component={SinglePost} />
+          <PrivateRoute path="/posts" exact component={Posts} />
           <PrivateRoute
             path="/create-profile"
             exact

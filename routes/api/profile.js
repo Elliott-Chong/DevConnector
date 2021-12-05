@@ -105,11 +105,11 @@ router.delete("/", auth, async (req, res) => {
 
 router.get("/user/:user_id", async (req, res) => {
   try {
-    const profiles = await Profile.findOne({
+    const profile = await Profile.findOne({
       user: req.params.user_id,
     }).populate("user");
-    if (!profiles) return res.status(400).json({ msg: "Profile not found" });
-    res.json({ profiles });
+    if (!profile) return res.status(400).json({ msg: "Profile not found" });
+    res.json(profile);
   } catch (error) {
     console.error(error.message);
     if (error.kind == "ObjectId")

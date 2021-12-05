@@ -10,8 +10,12 @@ const PrivateRoute = ({ path, component: Component }) => {
     <Route
       path={path}
       exact
-      render={() =>
-        isAuthenticated ? <Component /> : <Redirect to="/login"></Redirect>
+      render={(props) =>
+        isAuthenticated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login"></Redirect>
+        )
       }
     />
   );

@@ -85,6 +85,32 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "FILL_ALL_PROFILES", payload: response.data });
   }, []);
 
+  const get_github_repos = useCallback(async (username) => {
+    try {
+      const response = await axios.get(`/api/profile/github/${username}`);
+      dispatch({ type: "SET_REPOS", payload: response.data });
+    } catch (error) {
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  }, []);
+
+  const get_profile_by_user_id = useCallback(async (id) => {
+    try {
+      dispatch({ type: "CLEAR_PROFILE" });
+      dispatch({ type: "START_LOADING" });
+      const response = await axios.get(`/api/profile/user/${id}`);
+      dispatch({ type: "SET_PROFILE", payload: { profile: response.data } });
+    } catch (error) {
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  }, []);
+
   const addExperience = useCallback(async (experienceData, history) => {
     try {
       const config = {
@@ -133,6 +159,38 @@ const AppProvider = ({ children }) => {
       }
     }
   }, []);
+
+  const getPosts = useCallback(async () => {
+    try {
+      dispatch({ type: "START_LOADING" });
+      const response = await axios.get("/api/posts");
+      dispatch({
+        type: "FILL_POSTS",
+        payload: response.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: "POST_ERROR",
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  }, []);
+  const getPost = useCallback(async (id) => {
+    try {
+      dispatch({ type: "START_LOADING" });
+      const response = await axios.get(`/api/posts/${id}`);
+      dispatch({
+        type: "FILL_POST",
+        payload: response.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: "POST_ERROR",
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  }, []);
+
   const getCurrentProfile = useCallback(async () => {
     try {
       dispatch({ type: "START_LOADING" });
@@ -212,21 +270,84 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const like = async (id) => {
+    const response = await axios.put(`/api/posts/like/${id}`);
+    dispatch({ type: "UPDATE_LIKES", payload: { likes: response.data, id } });
+  };
+
+  const deletePost = async (id) => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      dispatch({ type: "DELETE_POST", payload: id });
+      setAlert("success", "Post Deleted!");
+    } catch (error) {
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  };
+  const deleteComment = async (commentId, postId) => {
+    try {
+      const response = await axios.delete(
+        `/api/posts/comment/${commentId}/${postId}`
+      );
+      dispatch({ type: "DELETE_COMMENT", payload: response.data });
+      setAlert("success", "Comment Deleted!");
+    } catch (error) {
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => setAlert("danger", error.msg));
+      }
+    }
+  };
+  const addPost = async (text) => {
+    const config = {
+      headers: { "Application-Type": "application/json" },
+    };
+    const body = { text };
+    const response = await axios.post("/api/posts", body, config);
+    dispatch({ type: "ADD_POST", payload: response.data });
+    setAlert("success", "Post Created!");
+  };
+
+  const addComment = async (id, text) => {
+    const config = {
+      headers: { "Application-Type": "application/json" },
+    };
+    const body = { text };
+    const response = await axios.post(`/api/posts/comment/${id}`, body, config);
+    dispatch({
+      type: "ADD_COMMENT",
+      payload: response.data,
+    });
+    setAlert("success", "Comment Added!");
+  };
+
   return (
     <AppContext.Provider
       value={{
+        addPost,
         state,
         dispatch,
         setAlert,
+        like,
         attemptRegister,
+        deletePost,
         loadUser,
         loginUser,
         getCurrentProfile,
+        deleteComment,
+        addComment,
         createOrUpdateProfile,
         addEducation,
         addExperience,
+        get_profile_by_user_id,
+        getPost,
         delete_account,
+        getPosts,
         delete_experience,
+        get_github_repos,
         delete_education,
         get_all_profiles,
       }}

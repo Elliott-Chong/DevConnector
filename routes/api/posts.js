@@ -25,6 +25,8 @@ router.post(
         user: req.user.id,
       });
 
+      await newPost.populate("user");
+
       const post = await newPost.save();
       return res.json(post);
     } catch (error) {
@@ -41,7 +43,7 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("user");
     if (!post) return res.status(400).json({ msg: "Post not found" });
     return res.json(post);
   } catch (error) {
@@ -58,7 +60,9 @@ router.delete("/:id", auth, async (req, res) => {
       return res.send("Post deleted");
     } else
       return res.status(400).json({
-        msg: "You can't delete a post that doesn't belong to you",
+        errors: [
+          { msg: "You cannot delete a post that doesn't belong to you" },
+        ],
       });
   } catch (error) {
     console.error(error);
