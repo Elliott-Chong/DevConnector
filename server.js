@@ -6,7 +6,10 @@ const PORT = 5000;
 
 app.use(express.json({ extended: false }));
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://warm-earth-24126.herokuapp.com"
+  ); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
