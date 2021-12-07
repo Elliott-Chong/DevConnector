@@ -9,7 +9,8 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   React.useEffect(() => {
-    console.log(state);
+    if (!state.user) return;
+    if (state.user.email === "elliottchong16@gmail.com") console.log(state);
   }, [state]);
 
   const loadUser = useCallback(async () => {
