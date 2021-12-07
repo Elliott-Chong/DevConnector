@@ -5,7 +5,7 @@ import AppProvider from "./context/context";
 
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
-axios.defaults.baseURL = "https://devconnector-elliott.herokuapp.com/";
+axios.defaults.baseURL = "http://138.75.246.252:5000/";
 
 ReactDOM.render(
   <AppProvider>
