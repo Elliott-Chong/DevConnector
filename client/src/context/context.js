@@ -9,8 +9,13 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   React.useEffect(() => {
-    if (!state.user) return;
-    if (state.user.email === "elliottchong16@gmail.com") console.log(state);
+    if (!state.user || state.user === null || state.user === {} || state.user === '') {return}
+    if (state.user.email === "elliottchong16@gmail.com") {
+      console.log(state)
+    }
+    else {
+      console.log('not authorized')
+    }
   }, [state]);
 
   const loadUser = useCallback(async () => {
