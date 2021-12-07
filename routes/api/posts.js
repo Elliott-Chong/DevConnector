@@ -116,6 +116,7 @@ router.post(
         user: user,
       };
       post.comments.unshift(newComment);
+      post.comments.populate('user')
 
       await post.save();
       return res.json(post.comments);

@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 
 connectDB();
 
-app.get("/", (req, res) => res.json({ elle: "is running" }));
+app.get("/", (req, res) => res.json({'hello': 'world'}));
 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
