@@ -1,6 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://elliott:elle1412@devconnector.lybrn.mongodb.net/DevConnector?retryWrites=true&w=majority",
-  "jwtToken": "ellebellejson",
-  "clientId": "Iv1.d1c860818d0e2930",
-  "clientSecret": "87c0d180a5422955389017bca97dbd8215b9ddb5"
-}
